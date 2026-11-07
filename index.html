@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Game Portal</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --card: #141a22;
+      --text: #e8f0f7;
+      --muted: #8aa0b5;
+      --accent: #3fc1ff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    header {
+      padding: 2rem 1.5rem 1rem;
+      text-align: center;
+      border-bottom: 1px solid #1e2a38;
+    }
+    h1 { font-size: 1.8rem; margin-bottom: 0.35rem; }
+    p { color: var(--muted); font-size: 0.95rem; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      padding: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid #243041;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.15s ease, border-color 0.15s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      background: #0a1018;
+    }
+    .card-body { padding: 1rem; }
+    .card h2 { font-size: 1.1rem; margin-bottom: 0.4rem; }
+    .card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.85rem; }
+    a.btn {
+      display: inline-block;
+      background: var(--accent);
+      color: #041018;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.45rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    a.btn:hover { filter: brightness(1.1); }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Game Portal</h1>
+    <p>Browser games collection. Links open the original sites.</p>
+  </header>
+
+  <main class="grid">
+    <!-- Skate 3 fan project -->
+    <article class="card">
+      <div style="height:150px;display:flex;align-items:center;justify-content:center;background:#0a1018;font-size:2rem;">🛹</div>
+      <div class="card-body">
+        <h2>Skate 3 Fan Game</h2>
+        <p>Unofficial browser port (Rust engine). Not affiliated with EA.</p>
+        <a class="btn" href="https://skate.aaddpp.lol/" target="_blank" rel="noopener">Play</a>
+      </div>
+    </article>
+
+    <!-- Placeholder cards - replace with more games as desired -->
+    <article class="card">
+      <div style="height:150px;display:flex;align-items:center;justify-content:center;background:#0a1018;font-size:2rem;">🕹️</div>
+      <div class="card-body">
+        <h2>Add more games</h2>
+        <p>Copy a card block in index.html and point the link to any public browser game.</p>
+        <a class="btn" href="#" onclick="alert('Edit index.html to add real games'); return false;">Example</a>
+      </div>
+    </article>
+  </main>
+
+  <footer>
+    Links are to third-party sites. Use at your own risk. Not affiliated with any game publishers.
+  </footer>
+</body>
+</html>
