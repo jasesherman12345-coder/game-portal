@@ -3,107 +3,368 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A simple collection of free browser games. Links open the original sites." />
   <title>Game Portal</title>
   <style>
     :root {
       --bg: #0b0f14;
-      --card: #141a22;
+      --bg-elevated: #121820;
+      --card: #161e28;
+      --card-hover: #1c2633;
+      --border: #243041;
       --text: #e8f0f7;
       --muted: #8aa0b5;
       --accent: #3fc1ff;
+      --accent-dim: rgba(63, 193, 255, 0.15);
+      --radius: 14px;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
       line-height: 1.5;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(63, 193, 255, 0.12), transparent),
+        radial-gradient(ellipse 60% 40% at 100% 100%, rgba(63, 193, 255, 0.06), transparent);
     }
+
     header {
-      padding: 2rem 1.5rem 1rem;
+      padding: 2.5rem 1.5rem 1.75rem;
       text-align: center;
-      border-bottom: 1px solid #1e2a38;
+      border-bottom: 1px solid var(--border);
     }
-    h1 { font-size: 1.8rem; margin-bottom: 0.35rem; }
-    p { color: var(--muted); font-size: 0.95rem; }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 1.25rem;
-      padding: 1.5rem;
-      max-width: 1200px;
+
+    .logo {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.1rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.45rem;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 420px;
       margin: 0 auto;
     }
-    .card {
-      background: var(--card);
-      border: 1px solid #243041;
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.15s ease, border-color 0.15s;
+
+    .search-wrap {
+      max-width: 420px;
+      margin: 1.5rem auto 0;
+      position: relative;
     }
-    .card:hover {
-      transform: translateY(-3px);
+
+    .search-wrap input {
+      width: 100%;
+      padding: 0.7rem 1rem 0.7rem 2.6rem;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text);
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+
+    .search-wrap input::placeholder {
+      color: var(--muted);
+    }
+
+    .search-wrap input:focus {
       border-color: var(--accent);
     }
-    .card img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      background: #0a1018;
+
+    .search-wrap svg {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: var(--muted);
+      pointer-events: none;
     }
-    .card-body { padding: 1rem; }
-    .card h2 { font-size: 1.1rem; margin-bottom: 0.4rem; }
-    .card p { font-size: 0.85rem; color: var(--muted); margin-bottom: 0.85rem; }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.75rem 1.25rem 3rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.15s ease, border-color 0.15s, background 0.15s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(63, 193, 255, 0.45);
+      background: var(--card-hover);
+    }
+
+    .card-thumb {
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.6rem;
+      background: linear-gradient(145deg, #0e1620, #15202c);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-body {
+      padding: 1rem 1.1rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .card h2 {
+      font-size: 1.05rem;
+      font-weight: 650;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.01em;
+    }
+
+    .card p {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 1rem;
+      flex: 1;
+    }
+
+    .card .meta {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 0.85rem;
+      opacity: 0.85;
+    }
+
     a.btn {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
       background: var(--accent);
       color: #041018;
       text-decoration: none;
-      font-weight: 600;
-      padding: 0.45rem 0.9rem;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 0.5rem 0.95rem;
       border-radius: 8px;
-      font-size: 0.9rem;
+      transition: filter 0.15s, transform 0.1s;
+      align-self: flex-start;
     }
-    a.btn:hover { filter: brightness(1.1); }
+
+    a.btn:hover {
+      filter: brightness(1.08);
+    }
+
+    a.btn:active {
+      transform: scale(0.97);
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.45rem;
+      border-radius: 4px;
+      background: var(--accent-dim);
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
     footer {
       text-align: center;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem 2.5rem;
       color: var(--muted);
       font-size: 0.8rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    footer a:hover {
+      color: var(--text);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 520px) {
+      header {
+        padding: 1.75rem 1rem 1.25rem;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
   <header>
+    <div class="logo">Browser Games</div>
     <h1>Game Portal</h1>
-    <p>Browser games collection. Links open the original sites.</p>
+    <p class="subtitle">A small collection of free games that run in your browser. Links open the original sites.</p>
+    <div class="search-wrap">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z" />
+      </svg>
+      <input type="search" id="search" placeholder="Search games…" autocomplete="off" />
+    </div>
   </header>
 
-  <main class="grid">
-    <!-- Skate 3 fan project -->
-    <article class="card">
-      <div style="height:150px;display:flex;align-items:center;justify-content:center;background:#0a1018;font-size:2rem;">🛹</div>
-      <div class="card-body">
-        <h2>Skate 3 Fan Game</h2>
-        <p>Unofficial browser port (Rust engine). Not affiliated with EA.</p>
-        <a class="btn" href="https://skate.aaddpp.lol/" target="_blank" rel="noopener">Play</a>
-      </div>
-    </article>
+  <main>
+    <div class="section-label">Games</div>
+    <div class="grid" id="grid">
 
-    <!-- Placeholder cards - replace with more games as desired -->
-    <article class="card">
-      <div style="height:150px;display:flex;align-items:center;justify-content:center;background:#0a1018;font-size:2rem;">🕹️</div>
-      <div class="card-body">
-        <h2>Add more games</h2>
-        <p>Copy a card block in index.html and point the link to any public browser game.</p>
-        <a class="btn" href="#" onclick="alert('Edit index.html to add real games'); return false;">Example</a>
-      </div>
-    </article>
+      <article class="card" data-name="skate 3 fan game" data-tags="sports skating">
+        <div class="card-thumb">🛹</div>
+        <div class="card-body">
+          <span class="tag">Unofficial</span>
+          <h2>Skate 3 Fan Game</h2>
+          <p>Unofficial browser port of Skate 3 (Rust engine). Not affiliated with EA.</p>
+          <div class="meta">Third-party · External site</div>
+          <a class="btn" href="https://skate.aaddpp.lol/" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+      <article class="card" data-name="slope" data-tags="endless runner">
+        <div class="card-thumb">🟢</div>
+        <div class="card-body">
+          <h2>Slope</h2>
+          <p>Classic endless runner. Keep the ball on the track as long as you can.</p>
+          <div class="meta">HTML5 · Browser</div>
+          <a class="btn" href="https://slopegame.io/" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+      <article class="card" data-name="2048" data-tags="puzzle numbers">
+        <div class="card-thumb">🔢</div>
+        <div class="card-body">
+          <h2>2048</h2>
+          <p>Slide tiles and combine numbers until you reach 2048.</p>
+          <div class="meta">Puzzle · Classic</div>
+          <a class="btn" href="https://play2048.co/" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+      <article class="card" data-name="cookie clicker" data-tags="idle clicker">
+        <div class="card-thumb">🍪</div>
+        <div class="card-body">
+          <h2>Cookie Clicker</h2>
+          <p>The original idle clicker. Bake cookies, buy upgrades, go infinite.</p>
+          <div class="meta">Idle · Classic</div>
+          <a class="btn" href="https://orteil.dashnet.org/cookieclicker/" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+      <article class="card" data-name="tetris" data-tags="puzzle blocks">
+        <div class="card-thumb">🧱</div>
+        <div class="card-body">
+          <h2>Tetris</h2>
+          <p>Classic block-stacking puzzle. Clear lines, don't fill the board.</p>
+          <div class="meta">Puzzle · Classic</div>
+          <a class="btn" href="https://tetris.com/play-tetris" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+      <article class="card" data-name="pac-man" data-tags="arcade maze">
+        <div class="card-thumb">🌙</div>
+        <div class="card-body">
+          <h2>Pac-Man</h2>
+          <p>The iconic arcade maze game. Eat dots, avoid ghosts.</p>
+          <div class="meta">Arcade · Classic</div>
+          <a class="btn" href="https://www.google.com/logos/2010/pacman10-i.html" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+      <article class="card" data-name="flappy bird" data-tags="arcade flyer">
+        <div class="card-thumb">🐦</div>
+        <div class="card-body">
+          <h2>Flappy Bird</h2>
+          <p>Simple but addictive flyer. Tap to stay in the air between pipes.</p>
+          <div class="meta">Arcade · Casual</div>
+          <a class="btn" href="https://flappybird.io/" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+      <article class="card" data-name="chess" data-tags="board strategy">
+        <div class="card-thumb">♟️</div>
+        <div class="card-body">
+          <h2>Chess.com</h2>
+          <p>Play chess against the computer or online opponents.</p>
+          <div class="meta">Board · Strategy</div>
+          <a class="btn" href="https://www.chess.com/play/computer" target="_blank" rel="noopener noreferrer">Play →</a>
+        </div>
+      </article>
+
+    </div>
   </main>
 
   <footer>
-    Links are to third-party sites. Use at your own risk. Not affiliated with any game publishers.
+    Links go to third-party websites. Not affiliated with any game publishers.<br />
+    Built as a simple static page · <a href="https://github.com/jasesherman12345-coder/game-portal">Source on GitHub</a>
   </footer>
+
+  <script>
+    const search = document.getElementById('search');
+    const cards = document.querySelectorAll('.card');
+
+    search.addEventListener('input', () => {
+      const q = search.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const name = card.dataset.name || '';
+        const tags = card.dataset.tags || '';
+        const match = !q || name.includes(q) || tags.includes(q);
+        card.classList.toggle('hidden', !match);
+      });
+    });
+  </script>
 </body>
 </html>
